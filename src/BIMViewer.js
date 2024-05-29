@@ -37,53 +37,70 @@ const hideEdgesMinDrawCount = 5; // FastNavPlugin enables dynamic edges when xeo
 const scaleCanvasResolutionMinDrawCount = 1000; // FastNavPlugin switches to low-res canvas when xeokit's per-frame draw count rises above this
 
 function createExplorerTemplate(cfg) {
-  const explorerTemplate =
-    `<div class="xeokit-tabs"> 
-    <div class="xeokit-tab xeokit-modelsTab">
-        <a class="xeokit-i18n xeokit-tab-btn" href="#" data-xeokit-i18n="modelsExplorer.title">Models</a>
-        <div class="xeokit-tab-content">
-            <div class="xeokit-btn-group">
-                <button type="button" class="xeokit-i18n xeokit-loadAllModels xeokit-btn disabled" data-xeokit-i18n="modelsExplorer.loadAll" data-xeokit-i18ntip="modelsExplorer.loadAllTip" data-tippy-content="Load all models">Load all</button>
-                <button type="button" class="xeokit-i18n xeokit-unloadAllModels xeokit-btn disabled" data-xeokit-i18n="modelsExplorer.unloadAll"  data-xeokit-i18ntip="modelsExplorer.unloadAllTip" data-tippy-content="Unload all models">Unload all</button>` +
-    (cfg.enableEditModels
-      ? `<button type="button" class="xeokit-i18n xeokit-addModel xeokit-btn disabled" data-xeokit-i18n="modelsExplorer.add"  data-xeokit-i18ntip="modelsExplorer.addTip" data-tippy-content="Add model">Add</button>`
-      : ``) +
-    `</div>
-            <div class="xeokit-models" ></div>
-        </div>
-    </div>
-    <div class="xeokit-tab xeokit-objectsTab">
-        <a class="xeokit-i18n xeokit-tab-btn disabled" href="#" data-xeokit-i18n="objectsExplorer.title">Objects</a>
-        <div class="xeokit-tab-content">
-         <div class="xeokit-btn-group">
-            <button type="button" class="xeokit-i18n xeokit-showAllObjects xeokit-btn disabled" data-xeokit-i18n="objectsExplorer.showAll" data-xeokit-i18ntip="objectsExplorer.showAllTip" data-tippy-content="Show all objects">Show all</button>
-            <button type="button" class="xeokit-i18n xeokit-hideAllObjects xeokit-btn disabled" data-xeokit-i18n="objectsExplorer.hideAll" data-xeokit-i18ntip="objectsExplorer.hideAllTip" data-tippy-content="Hide all objects">Hide all</button>
-        </div>
-        <div class="xeokit-objects xeokit-tree-panel" ></div>
-        </div>
-    </div>
-    <div class="xeokit-i18n xeokit-tab xeokit-classesTab">
-        <a class="xeokit-i18n xeokit-tab-btn disabled" href="#" data-xeokit-i18n="classesExplorer.title">Classes</a>
-        <div class="xeokit-tab-content">
-            <div class="xeokit-btn-group">
-                <button type="button" class="xeokit-i18n xeokit-showAllClasses xeokit-btn disabled" data-xeokit-i18n="classesExplorer.showAll"  data-xeokit-i18ntip="classesExplorer.hideAllTip" data-tippy-content="Show all classes">Show all</button>
-                <button type="button" class="xeokit-i18n xeokit-hideAllClasses xeokit-btn disabled" data-xeokit-i18n="classesExplorer.hideAll" data-xeokit-i18ntip="classesExplorer.hideAllTip" data-tippy-content="Hide all classes">Hide all</button>
-            </div>
-            <div class="xeokit-classes xeokit-tree-panel" ></div>
-        </div>
-    </div>
-     <div class="xeokit-tab xeokit-storeysTab">
-        <a class="xeokit-i18n xeokit-tab-btn disabled" href="#" data-xeokit-i18n="storeysExplorer.title">Storeys</a>
-        <div class="xeokit-tab-content">
-         <div class="xeokit-btn-group">
-                <button type="button" class="xeokit-i18n xeokit-showAllStoreys xeokit-btn disabled" data-xeokit-i18n="storeysExplorer.showAll" data-xeokit-i18ntip="storeysExplorer.showAllTip" data-tippy-content="Show all storeys">Show all</button>
-                <button type="button" class="xeokit-i18n xeokit-hideAllStoreys xeokit-btn disabled" data-xeokit-i18n="storeysExplorer.hideAll" data-xeokit-i18ntip="storeysExplorer.hideAllTip" data-tippy-content="Hide all storeys">Hide all</button>
-            </div>
-             <div class="xeokit-storeys xeokit-tree-panel"></div>
-        </div>
-    </div>
-</div>`;
-  return explorerTemplate;
+    //class="xeokit-i18n xeokit-reset xeokit-btn fa fa-home fa-2x"
+    const explorerTemplate =
+      `<div class="xeokit-tabs">
+      <div class="xeokit-tab xeokit-modelsTab">
+          <a class="xeokit-tab-btn" href="#">
+            <i class="fa fa-thin fa-cubes"></i> 
+            <span class="xeokit-i18n" data-xeokit-i18n="modelsExplorer.title">Models</span>
+           </a>
+           <div class="xeokit-tab-content">
+              <div class="xeokit-tab-switch">
+                <span class="xeokit-i18n" data-xeokit-i18n="modelsExplorer.loadAll" data-xeokit-i18ntip="modelsExplorer.loadAllTip" data-tippy-content="Show all models"> Show all</span>
+                <label class="switch">
+                  <input type="checkbox" class="xeokit-check-loadAllModels" checked>
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <div class="xeokit-btn-group" style="display: none;">
+                  <button type="button" class="xeokit-i18n xeokit-loadAllModels xeokit-btn disabled" data-xeokit-i18n="modelsExplorer.loadAll" data-xeokit-i18ntip="modelsExplorer.loadAllTip" data-tippy-content="Load all models">Load all</button>
+                  <button type="button" class="xeokit-i18n xeokit-unloadAllModels xeokit-btn disabled" data-xeokit-i18n="modelsExplorer.unloadAll"  data-xeokit-i18ntip="modelsExplorer.unloadAllTip" data-tippy-content="Unload all models">Unload all</button>
+              </div>
+              <div class="xeokit-models" ></div>
+          </div>
+      </div>
+      <div class="xeokit-tab xeokit-objectsTab">
+           <a class="xeokit-tab-btn disabled" href="#">
+            <i class="fa fa-thin fa-cubes-stacked"></i>
+            <span class="xeokit-i18n" data-xeokit-i18n="objectsExplorer.title">Objects</span>
+           </a>
+          <div class="xeokit-tab-content">
+           <div class="xeokit-btn-group">
+              <button type="button" class="xeokit-i18n xeokit-showAllObjects xeokit-btn disabled" data-xeokit-i18n="objectsExplorer.showAll" data-xeokit-i18ntip="objectsExplorer.showAllTip" data-tippy-content="Show all objects">Show all</button>
+              <button type="button" class="xeokit-i18n xeokit-hideAllObjects xeokit-btn disabled" data-xeokit-i18n="objectsExplorer.hideAll" data-xeokit-i18ntip="objectsExplorer.hideAllTip" data-tippy-content="Hide all objects">Hide all</button>
+          </div>
+          <div class="xeokit-objects xeokit-tree-panel" ></div>
+          </div>
+      </div>
+      <div class="xeokit-i18n xeokit-tab  xeokit-classesTab">
+          <a class="xeokit-tab-btn disabled" href="#">
+            <i class="fa fa-thin fa-object-group"></i>
+            <span class="xeokit-i18n" data-xeokit-i18n="classesExplorer.title">Class</span>
+          </a>
+          <div class="xeokit-tab-content">
+              <div class="xeokit-btn-group">
+                  <button type="button" class="xeokit-i18n xeokit-showAllClasses xeokit-btn disabled" data-xeokit-i18n="classesExplorer.showAll"  data-xeokit-i18ntip="classesExplorer.hideAllTip" data-tippy-content="Show all classes">Show all</button>
+                  <button type="button" class="xeokit-i18n xeokit-hideAllClasses xeokit-btn disabled" data-xeokit-i18n="classesExplorer.hideAll" data-xeokit-i18ntip="classesExplorer.hideAllTip" data-tippy-content="Hide all classes">Hide all</button>
+              </div>
+              <div class="xeokit-classes xeokit-tree-panel" ></div>
+          </div>
+      </div>
+       <div class="xeokit-tab xeokit-storeysTab">
+          <a class="xeokit-tab-btn disabled" href="#" style="width: 20%">
+            <i class="fa fa-thin fa-layer-group"></i>
+            <span class="xeokit-i18n" data-xeokit-i18n="storeysExplorer.title">Storeys</span>
+          </a>
+          <div class="xeokit-tab-content">
+           <div class="xeokit-btn-group">
+                  <button type="button" class="xeokit-i18n xeokit-showAllStoreys xeokit-btn disabled" data-xeokit-i18n="storeysExplorer.showAll" data-xeokit-i18ntip="storeysExplorer.showAllTip" data-tippy-content="Show all storeys">Show all</button>
+                  <button type="button" class="xeokit-i18n xeokit-hideAllStoreys xeokit-btn disabled" data-xeokit-i18n="storeysExplorer.hideAll" data-xeokit-i18ntip="storeysExplorer.hideAllTip" data-tippy-content="Hide all storeys">Hide all</button>
+              </div>
+               <div class="xeokit-storeys xeokit-tree-panel"></div>
+          </div>
+      </div>
+    </div>`;
+    return explorerTemplate;
 }
 
 function createToolbarTemplate(cfg = {}) {
