@@ -183,17 +183,17 @@ function initTabs(containerElement) {
   let tabbedContainers = containerElement.querySelectorAll("." + tabsClass);
   for (let i = 0; i < tabbedContainers.length; i++) {
     let tabbedContainer = tabbedContainers[i];
-    let tabList = tabbedContainer.querySelectorAll("." + tabClass);
+    let tabList = tabbedContainer.querySelectorAll('.' + tabClass);
     activateTab(tabList[0]);
     for (let i = 0; i < tabList.length; i++) {
       let tabElement = tabList[i];
-      let tabButton = tabElement.querySelector("." + tabButtonClass);
-      tabButton.addEventListener("click", function (event) {
+      let tabButton = tabElement.querySelector('.' + tabButtonClass);
+      tabButton.addEventListener('click', function (event) {
         event.preventDefault();
-        if (this.classList.contains("disabled")) {
+        if (this.classList.contains('disabled')) {
           return;
         }
-        activateTab(event.target.parentNode);
+        activateTab(event.currentTarget.parentNode);
       });
     }
   }
