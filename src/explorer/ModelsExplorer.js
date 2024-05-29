@@ -72,12 +72,17 @@ class ModelsExplorer extends Controller {
       throw "Missing config: modelsElement";
     }
 
+    if (!cfg.checkLoadModelsElement) {
+        throw 'Missing config: checkLoadModelsElement';
+    }
+
     this._enableAddModels = !!cfg.enableEditModels;
     this._modelsTabElement = cfg.modelsTabElement;
     this._loadModelsButtonElement = cfg.loadModelsButtonElement;
     this._unloadModelsButtonElement = cfg.unloadModelsButtonElement;
     this._addModelButtonElement = cfg.addModelButtonElement;
     this._modelsElement = cfg.modelsElement;
+    this._checkLoadModelsElement = cfg.checkLoadModelsElement;
     this._modelsTabButtonElement =
       this._modelsTabElement.querySelector(".xeokit-tab-btn");
 
@@ -412,6 +417,17 @@ class ModelsExplorer extends Controller {
         loadError
       );
     }
+    setTimeout(() => {
+        const check = this._areAllModelsChecked();
+        this._checkLoadModelsElement.checked = check;
+      }, 500);
+  }
+
+  _areAllModelsChecked() {
+    return this._models.every(model => {
+        const checkbox = document.getElementById('' + model.id);
+        return checkbox && checkbox.checked;
+    });
   }
 
   _jumpToInitialCamera() {
@@ -464,6 +480,7 @@ class ModelsExplorer extends Controller {
     } else {
       this._loadModelsButtonElement.classList.add("disabled");
     }
+    this._checkLoadModelsElement.checked = false;
     this.fire("modelUnloaded", modelId);
   }
 

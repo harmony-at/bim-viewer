@@ -318,6 +318,7 @@ class BIMViewer extends Controller {
       unloadModelsButtonElement: explorerElement.querySelector(
         ".xeokit-unloadAllModels"
       ),
+      checkLoadModelsElement: explorerElement.querySelector('.xeokit-check-loadAllModels'),
       addModelButtonElement: explorerElement.querySelector(".xeokit-addModel"), // Can be undefined
       modelsElement: explorerElement.querySelector(".xeokit-models"),
       enableEditModels: this._enableAddModels,
@@ -585,6 +586,12 @@ class BIMViewer extends Controller {
           event.preventDefault();
         });
     }
+
+    explorerElement
+        .querySelector('.xeokit-check-loadAllModels')
+        .addEventListener("change", (event) => {
+          event.target.checked ? this.loadAllModels() : this.unloadAllModels();
+    });
 
     this._bcfViewpointsPlugin = new BCFViewpointsPlugin(this.viewer, {
       xrayAsZeroAlpha: true,
